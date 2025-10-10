@@ -106,7 +106,7 @@
           }
         }
       ],
-      "mark": {"type": "line", "point": true, "interpolate": "linear", "strokeWidth": 1.5},
+      "mark": {"type": "line", "point": true, "interpolate": "linear", "strokeWidth": 1.3},
       "encoding": {
         "x": {
           "field": "renamed",
@@ -126,7 +126,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["Asia", "Europe", "Africa", "North America", "South America", "Oceania"],
-            "range": ["#e6b3cc", "#b3d1e6", "#e6d9b3", "#b3e6cc", "#d9b3e6", "#e6ccb3"]
+            "range": ["#f4c2d7", "#c7d9f4", "#f6e6b3", "#c6f2da", "#e3baf6", "#f5d2b5"]
           },
           "legend": null
         },
@@ -146,9 +146,9 @@
 
     {
       "transform": [{"filter": "datum.is_annotated === 'yes'"}],
-      "mark": {"type": "line", "point": false, "interpolate": "linear", "strokeWidth": 3},
+      "mark": {"type": "line", "interpolate": "linear", "strokeWidth": 4, "opacity": 1},
       "encoding": {
-        "x": {"field": "renamed", "type": "ordinal", "scale": {"padding": 0.1}},
+        "x": {"field": "renamed", "type": "ordinal"},
         "y": {"field": "value_normalised", "type": "quantitative"},
         "detail": {"field": "Country"},
         "color": {
@@ -156,23 +156,18 @@
           "type": "nominal",
           "scale": {
             "domain": ["Australia", "Singapore", "Sweden"],
-            "range": ["#0d47a1", "#1b5e20", "#b71c1c"]
+            "range": ["#0A2E75", "#007E33", "#8B0000"]
           },
           "legend": null
         },
         "opacity": {"value": 1},
-        "tooltip": [
-          {"field": "Country", "title": "Country"},
-          {"field": "renamed", "title": "Metric"},
-          {"field": "value", "title": "Original Value"},
-          {"field": "value_normalised", "title": "Normalised", "format": ".3f"}
-        ]
+        "order": {"value": 1} 
       }
     },
 
     {
       "transform": [{"filter": "datum.is_annotated === 'yes'"}],
-      "mark": {"type": "point", "size": 40, "filled": true},
+      "mark": {"type": "point", "size": 70, "filled": true, "opacity": 1},
       "encoding": {
         "x": {"field": "renamed", "type": "ordinal"},
         "y": {"field": "value_normalised", "type": "quantitative"},
@@ -181,11 +176,10 @@
           "type": "nominal",
           "scale": {
             "domain": ["Australia", "Singapore", "Sweden"],
-            "range": ["#2A7AB5", "#1FAB1F", "#BA0F10"]
+            "range": ["#0A2E75", "#007E33", "#8B0000"]
           },
           "legend": null
-        },
-        "opacity": {"value": 1}
+        }
       }
     },
 
@@ -204,7 +198,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["Australia", "Singapore", "Sweden"],
-            "range": ["#2A7AB5", "#1FAB1F", "#BA0F10"]
+            "range": ["#0A2E75", "#007E33", "#8B0000"]
           },
           "legend": null
         }
