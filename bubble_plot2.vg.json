@@ -59,11 +59,16 @@
     { "calculate": "format(datum.UnemploymentRate, '.1f') + '%'", "as": "Unemp_fmt" },
     { "calculate": "format(datum.InboundTourism, '.2s')", "as": "Tourism_fmt" },
     { "calculate": "'$' + format(datum.GDP_PPP, ',.0f')", "as": "GDP_fmt" },
+
     { "window": [{"op": "rank", "as": "rank_high"}], "sort": [{"field": "InboundTourism", "order": "descending"}]},
     { "window": [{"op": "rank", "as": "rank_low"}], "sort": [{"field": "InboundTourism", "order": "ascending"}]},
     {
       "calculate": "datum.rank_high==1 || datum.rank_low==1 || datum['Country Name']=='Australia' ? 1 : 0",
       "as": "is_annotate"
+    },
+    {
+      "calculate": "sqrt(datum.GDP_PPP / 3.14159)",
+      "as": "bubble_radius"
     }
   ],
 
@@ -122,20 +127,23 @@
       }
     },
     {
+      "transform": [{"filter": "datum.is_annotate==1"}],
       "mark": {
         "type": "text",
-        "align": "left",
-        "dx": 6,
-        "dy": -6,
+        "align": "right",
+        "baseline": "top",
+        "dx": {"expr": "-0.5 * sqrt(datum.GDP_PPP) / 10"},
+        "dy": {"expr": "-0.5 * sqrt(datum.GDP_PPP) / 10"},
         "fontSize": 12,
-        "fontWeight": "bold"
+        "fontWeight": "bold",
+        "color": "black"
       },
       "encoding": {
         "x": {"field": "UnemploymentRate", "type": "quantitative"},
         "y": {"field": "InboundTourism", "type": "quantitative"},
-        "text": {"field": "Country Name"}
-      },
-      "transform": [{"filter": "datum.is_annotate==1"}]
+        "text": {"field": "Country Name"},
+        "opacity": {"condition": {"selection": "continent_sel", "value": 1}, "value": 0.1}
+      }
     }
   ],
 
