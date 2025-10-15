@@ -1,11 +1,11 @@
 /* ===== Root Variables ===== */
 :root {
   --font-sans: "Montserrat", "Helvetica Neue", Arial, sans-serif;
-  --font-serif: "Merriweather", Georgia, serif;
   --color-primary: #1a1a1a;
   --color-secondary: #444;
   --color-muted: #777;
   --color-accent: #0066cc;
+  --accent-color: #2c3e50; /* Added for consistent heading color */
   --bg-color: #fafafa;
   --max-width: 1400px;
   --section-spacing: 30px;
@@ -19,7 +19,7 @@ body {
   background: var(--bg-color);
   line-height: 1.6;
   overflow-x: hidden;
-  padding-bottom: 120px; /* avoids footer overlap */
+  padding-bottom: 120px;
   position: relative;
 }
 
@@ -31,10 +31,10 @@ header {
 
 h1 {
   margin: 0 auto;
-  font-size: 3rem;               /* larger for emphasis */
+  font-size: 3rem;
   font-weight: 700;
-  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
-  color: #2c3e50;                /* dark slate blue-grey */
+  font-family: var(--font-sans);
+  color: #2c3e50;
   letter-spacing: 1px;
 }
 
@@ -54,7 +54,7 @@ h1 {
 h2 {
   font-family: var(--font-sans);
   font-size: 1.6rem;
-  font-weight: 600;
+  font-weight: 700;        /* slightly bolder */
   margin: 0 0 10px;
   color: var(--accent-color);
 }
@@ -62,7 +62,7 @@ h2 {
 /* ===== Map ===== */
 #map.full-width {
   width: 100%;
-  max-width: var(--max-width); /* 1400px */
+  max-width: var(--max-width);
   margin: 0 auto;
   display: block;
 }
@@ -73,7 +73,7 @@ h2 {
   align-items: flex-start;
   justify-content: space-between;
   gap: 40px;
-  flex-wrap: nowrap; /* dashboard: no wrapping */
+  flex-wrap: nowrap;
 }
 
 .chart-row.alt-layout {
@@ -100,8 +100,8 @@ h2 {
   border-radius: 6px;
   background: white;
   padding: 10px;
-  overflow: visible;   /* dropdowns/legends not cut off */
-  position: relative;  /* keeps dropdowns anchored */
+  overflow: visible;
+  position: relative;
 }
 
 /* Center-specific style for Bubble + Bump */
@@ -109,8 +109,8 @@ h2 {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 80%;         /* take 80% of page width */
-  max-width: 1000px;  /* cap for readability */
+  width: 80%;
+  max-width: 1000px;
 }
 
 /* Bubble2 section centered */
@@ -131,22 +131,24 @@ h2 {
 
 /* ===== Text Boxes ===== */
 .chart-text {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans); /* unified font */
   font-size: 1rem;
   color: var(--color-secondary);
   line-height: 1.7;
   text-align: justify;
   margin: 0 auto;
-  background: var(--bg-color);
-  padding: 10px 15px;
-  border-radius: 4px;
+  background: #f9f9f9;            /* softer contrast */
+  padding: 15px 20px;
+  border: 1px solid #e0e0e0;      /* subtle border */
+  border-radius: 8px;             /* more defined separation */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* light shadow for figure/ground */
   max-width: 700px;
 }
 
 /* ===== Intro / Conclusion ===== */
 .intro,
 .conclusion {
-  background: #f0f4f9;
+  background: #f7faff; /* slightly lighter blue for cohesion */
   border-left: 4px solid var(--accent-color);
   border-radius: 6px;
   padding: 30px;
@@ -154,7 +156,7 @@ h2 {
 
 .intro p,
 .conclusion p {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans); /* unified font */
   font-size: 1rem;
   line-height: 1.7;
   color: var(--color-secondary);
@@ -181,13 +183,12 @@ footer p {
 /* Make bar chart column wider */
 #bar_chart {
   flex: 2 1 550px;   
-  min-width: 500px;  /* won’t shrink too much */
-  max-width: 900px;  /* cap if very large screen */
+  min-width: 500px;
+  max-width: 900px;
 }
 
 /* Make text column narrower */
 .chart-row.alt-layout .chart-text {
   flex: 1 1 300px;
-  max-width: 600px;   /* keeps it readable */
+  max-width: 600px;
 }
-
