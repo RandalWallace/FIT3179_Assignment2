@@ -64,6 +64,10 @@
     {
       "calculate": "datum.rank_high==1 || datum.rank_low==1 || datum.Country=='Australia' ? 1 : 0",
       "as": "is_annotate"
+    },
+    {
+      "calculate": "sqrt(datum.LifeExp_normalized/3.14159)", 
+      "as": "bubble_radius"
     }
   ],
 
@@ -108,19 +112,41 @@
       }
     },
     {
-      "mark": {"type": "text", "align": "left", "dx": 6, "dy": -6, "fontSize": 12, "fontWeight": "bold"},
+      "transform": [{"filter": "datum.is_annotate==1"}],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "top",
+        "dx": {"expr": "-0.7 * sqrt(datum.LifeExp_normalized)"},
+        "dy": {"expr": "-0.2 * sqrt(datum.LifeExp_normalized)"},
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "black"
+      },
       "encoding": {
         "x": {"field": "gov2023", "type": "quantitative"},
         "y": {"field": "Happiness_Score_num", "type": "quantitative"},
-        "text": {"field": "Country"}
-      },
-      "transform": [{"filter": "datum.is_annotate==1"}]
+        "text": {"field": "Country"},
+        "opacity": {"condition": {"selection": "continent_sel", "value": 1}, "value": 0.1}
+      }
     }
   ],
 
   "config": {
-    "title": {"font": "Montserrat","fontSize": 18,"fontWeight": "bold"},
-    "axis": {"labelFont": "Montserrat","labelFontSize": 12,"titleFont": "Montserrat","titleFontSize": 13,"titleFontWeight": "bold"},
-    "legend": {"labelFont": "Montserrat","labelFontSize": 12,"titleFont": "Montserrat","titleFontSize": 13,"titleFontWeight": "bold"}
+    "title": {"font": "Montserrat", "fontSize": 18, "fontWeight": "bold"},
+    "axis": {
+      "labelFont": "Montserrat",
+      "labelFontSize": 12,
+      "titleFont": "Montserrat",
+      "titleFontSize": 13,
+      "titleFontWeight": "bold"
+    },
+    "legend": {
+      "labelFont": "Montserrat",
+      "labelFontSize": 12,
+      "titleFont": "Montserrat",
+      "titleFontSize": 13,
+      "titleFontWeight": "bold"
+    }
   }
 }
