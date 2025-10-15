@@ -1,45 +1,40 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text": "Social Statistics by Individual Country (2023)"},
+  "title": {
+    "text": "Social Statistics by Individual Country (2023)",
+    "font": "Montserrat",
+    "fontSize": 18,
+    "fontWeight": "bold"
+  },
   "width": 500,
   "height": 500,
-
   "data": {
     "url": "https://raw.githubusercontent.com/RandalWallace/FIT3179_Assignment2/refs/heads/main/data/world-data-2023.csv"
   },
-
   "params": [
     {
       "name": "country_select",
-      "value": ["Australia", "United States", "India", "Sweden"],
+      "value": "Australia",
       "bind": {
         "input": "select",
-        "multiple": true,
         "options": [
-          "Afghanistan", "Albania", "Algeria", "Angola", "Argentina", "Armenia", "Australia", 
-          "Austria", "Azerbaijan", "Bahrain", "Bangladesh", "Belarus", "Belgium", "Benin", 
-          "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Bulgaria", "Burkina Faso",
-          "Cambodia", "Cameroon", "Canada", "Chad", "Chile", "China", "Colombia", "Costa Rica",
-          "Croatia", "Czech Republic", "Denmark", "Dominican Republic", "Ecuador", "Egypt",
-          "El Salvador", "Estonia", "Ethiopia", "Finland", "France", "Gabon", "Georgia",
-          "Germany", "Ghana", "Greece", "Guatemala", "Guinea", "Honduras", "Hungary", "Iceland",
-          "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica",
-          "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzstan", "Latvia", "Lebanon",
-          "Lithuania", "Luxembourg", "Madagascar", "Malaysia", "Mali", "Malta", "Mauritius",
-          "Mexico", "Moldova", "Mongolia", "Morocco", "Myanmar", "Nepal", "Netherlands",
-          "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman",
-          "Pakistan", "Panama", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
-          "Qatar", "Romania", "Russia", "Rwanda", "Saudi Arabia", "Senegal", "Serbia",
-          "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain",
-          "Sri Lanka", "Sweden", "Switzerland", "Tanzania", "Thailand", "Tunisia", "Turkey",
-          "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
-          "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+          "Afghanistan", "Albania", "Algeria", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahrain", "Bangladesh", "Belarus", "Belgium", "Benin", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Bulgaria", "Burkina Faso", "Cambodia", "Cameroon", "Canada", "Chad", "Chile", "China", "Colombia", "Costa Rica", "Croatia", "Czech Republic", "Denmark", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Estonia", "Ethiopia", "Finland", "France", "Gabon", "Georgia", "Germany", "Ghana", "Greece", "Guatemala", "Guinea", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzstan", "Latvia", "Lebanon", "Lithuania", "Luxembourg", "Madagascar", "Malaysia", "Mali", "Malta", "Mauritius", "Mexico", "Moldova", "Mongolia", "Morocco", "Myanmar", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Panama", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saudi Arabia", "Senegal", "Serbia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Tanzania", "Thailand", "Tunisia", "Turkey", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
         ],
-        "name": "Select Country: "
+        "name": "Country: "
+      }
+    },
+    {
+      "name": "compare_select",
+      "value": "None",
+      "bind": {
+        "input": "select",
+        "options": [
+          "None", "Afghanistan", "Albania", "Algeria", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahrain", "Bangladesh", "Belarus", "Belgium", "Benin", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Bulgaria", "Burkina Faso", "Cambodia", "Cameroon", "Canada", "Chad", "Chile", "China", "Colombia", "Costa Rica", "Croatia", "Czech Republic", "Denmark", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Estonia", "Ethiopia", "Finland", "France", "Gabon", "Georgia", "Germany", "Ghana", "Greece", "Guatemala", "Guinea", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzstan", "Latvia", "Lebanon", "Lithuania", "Luxembourg", "Madagascar", "Malaysia", "Mali", "Malta", "Mauritius", "Mexico", "Moldova", "Mongolia", "Morocco", "Myanmar", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Panama", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saudi Arabia", "Senegal", "Serbia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Tanzania", "Thailand", "Tunisia", "Turkey", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+        ],
+        "name": "Compare: "
       }
     }
   ],
-
   "transform": [
     {
       "fold": [
@@ -96,7 +91,7 @@
       "as": "value_normalised"
     },
     {
-      "filter": "indexof(country_select, datum.Country) >= 0"
+      "filter": "datum.Country == country_select || (compare_select != 'None' && datum.Country == compare_select)"
     },
     {
       "calculate": "datum.renamed === 'Fertility Rate' ? 0 : datum.renamed === 'Forest Coverage' ? 1 : datum.renamed === 'Primary Education Enrollment' ? 2 : datum.renamed === 'Higher Education Enrollment' ? 3 : datum.renamed === 'Infant Mortality' ? 4 : datum.renamed === 'Life Expectancy' ? 5 : datum.renamed === 'Health Spending' ? 6 : datum.renamed === 'Labor Force' ? 7 : datum.renamed === 'Tax Rate' ? 8 : 9",
@@ -127,12 +122,15 @@
       "as": "label_y"
     }
   ],
-
   "layer": [
     {
       "data": {
         "values": [
-          {"radius": 20}, {"radius": 40}, {"radius": 60}, {"radius": 80}, {"radius": 100}
+          {"radius": 20},
+          {"radius": 40},
+          {"radius": 60},
+          {"radius": 80},
+          {"radius": 100}
         ]
       },
       "mark": {
@@ -145,13 +143,18 @@
       "encoding": {
         "x": {"value": 250},
         "y": {"value": 250},
-        "size": {"field": "radius", "type": "quantitative", "scale": {"range": [800, 110000]}, "legend": null}
+        "size": {
+          "field": "radius",
+          "type": "quantitative",
+          "scale": {"range": [800, 110000]},
+          "legend": null
+        }
       }
     },
     {
       "data": {
         "values": [
-          {"angle": 0}, {"angle": 1}, {"angle": 2}, {"angle": 3}, {"angle": 4}, 
+          {"angle": 0}, {"angle": 1}, {"angle": 2}, {"angle": 3}, {"angle": 4},
           {"angle": 5}, {"angle": 6}, {"angle": 7}, {"angle": 8}, {"angle": 9}
         ]
       },
@@ -169,8 +172,8 @@
       "encoding": {
         "x": {"value": 250},
         "y": {"value": 250},
-        "x2": {"field": "x2", "type": "quantitative", "scale": {"domain": [-150, 150]}},
-        "y2": {"field": "y2", "type": "quantitative", "scale": {"domain": [-150, 150]}}
+        "x2": {"field": "x2", "type": "quantitative"},
+        "y2": {"field": "y2", "type": "quantitative"}
       }
     },
     {
@@ -251,8 +254,10 @@
           ],
           "value": "middle"
         }
-      },
-    "config": {
+      }
+    }
+  ],
+  "config": {
     "title": {
       "font": "Montserrat",
       "fontSize": 18,
@@ -272,9 +277,7 @@
       "titleFontSize": 13,
       "titleFontWeight": "bold"
     }
-  }
-    }
-  ],
+  },
   "resolve": {
     "scale": {
       "x": "independent",
